@@ -132,6 +132,7 @@ To resize:
 2. Choose a new size. (Don't resize the disk unless needed. You can only scale the disk *up*, never *down* (locking you in a high price))
 3. Click Resize
 4. When done, start the server using to top-right button
+5. (Because the server is using a systemctl service, it automatically runs PlutoSliderServer on boot.)
 
 
 
