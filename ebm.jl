@@ -18,18 +18,29 @@ end
 begin
 	using Markdown
 	using InteractiveUtils
-	using PlutoUI
-    using HypertextLiteral
 end
 
 # ╔═╡ cab5e5da-8609-11ec-2b2c-2d98fe66bb99
 begin
+	using PlutoUI
+    using HypertextLiteral
 	using ClimateMARGO
 	using ClimateMARGO.Models
 	using ClimateMARGO.Optimization;
 	using ClimateMARGO.Diagnostics;
 	using Plots;
 	gr();
+end
+
+# ╔═╡ 318174d3-2717-4618-8dc3-07413037fef4
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
 end
 
 # ╔═╡ 1a3b7318-d0a8-424a-96db-1deb03da716b
@@ -1293,6 +1304,7 @@ version = "0.9.1+5"
 
 # ╔═╡ Cell order:
 # ╠═055e1d55-709a-4c7a-89ff-d5c1c460c544
+# ╠═318174d3-2717-4618-8dc3-07413037fef4
 # ╠═cab5e5da-8609-11ec-2b2c-2d98fe66bb99
 # ╠═13b0c090-ff52-4eca-98a5-1306f859c58f
 # ╠═9c7d7e6c-d2d9-4754-b2e3-72c3b9e0ec06
