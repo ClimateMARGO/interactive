@@ -871,8 +871,6 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 		img.src = url
 		img.draggable = false
 		
-		console.log($r)
-		
 		const clamp = (x,a,b) => Math.min(Math.max(x, a), b)
 		wrapper.transform = f => [
 			clamp(f[0] * $(r.x_scale) + $(r.x_offset), $(r.x_min), $(r.x_max)),
@@ -890,8 +888,7 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 			k.style.top = `\${r[1] * svgrect.height}px`
 		}
 		
-		
-		wrapper.fired = false
+		wrapper.fired_already = false
 		
 		
 		wrapper.last_render_time = Date.now()
@@ -934,13 +931,13 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 						(e.clientX - svgrect.left) / svgrect.width, 
 						(e.clientY - svgrect.top) / svgrect.height
 					]
-					if(wrapper.fired === false){
+					if(wrapper.fired_already === false){
 						const new_coord = wrapper.transform(f)
 						value[dragging.current.id] = new_coord
 						set_knob_coord(dragging.current, new_coord)
 		
 						wrapper.classList.toggle("wiggle", false)
-						wrapper.fired = true
+						wrapper.fired_already = true
 						wrapper.dispatchEvent(new CustomEvent("input"), {})
 					}
 				}
