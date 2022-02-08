@@ -30,7 +30,10 @@ begin
 	using ClimateMARGO.Diagnostics;
 	using Plots;
 	gr();
-end
+end;
+
+# ╔═╡ cc8614a3-dd69-42d4-9954-44885bac93eb
+md"## Exploring uncertainty in climate forcing, feedbacks, and ocean heat uptake."
 
 # ╔═╡ 318174d3-2717-4618-8dc3-07413037fef4
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
@@ -41,7 +44,7 @@ macro bind(def, element)
         global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
-end
+end;
 
 # ╔═╡ 1a3b7318-d0a8-424a-96db-1deb03da716b
 cmip5_std = Dict("a"=>0.9*log(2.), "λ"=>0.31, "κ"=>0.18, "Cd"=>62.)
@@ -148,7 +151,7 @@ begin
 	</tbody>
 	</table>
 		"""),
-		"#e4f0e8"
+		"#10acac"
 	)
 end
 
@@ -174,11 +177,11 @@ end
 # ╔═╡ 13b0c090-ff52-4eca-98a5-1306f859c58f
 begin
 	p = plot(t(m), T(m), color=:grey, linewidth=3, alpha=0.5, label="baseline fossil growth")
-	plot!(t(m), T(m, M=true, R=true), linewidth=5, color=:deepskyblue2, label="''optimal''")
+	plot!(t(m), T(m, M=true, R=true), linewidth=5, color=:deepskyblue2, label="''optimal'' policy")
 	plot!(ylim=(0., 8.), xlim=(t(m)[1], t(m)[end]))
 	plot!(ylabel="warming (relative to P-I)", xlabel="year")
-	plot!(title="Global warming scenarios")
 	plot!(yticks=[0., 1., 1.5, 2., 2.5, 3., 4., 5., 6., 7., 8.])
+	plot!(size=(700, 325), margins=1.75Plots.Measures.mm)
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1303,11 +1306,12 @@ version = "0.9.1+5"
 """
 
 # ╔═╡ Cell order:
+# ╟─cc8614a3-dd69-42d4-9954-44885bac93eb
+# ╟─13b0c090-ff52-4eca-98a5-1306f859c58f
+# ╟─9c7d7e6c-d2d9-4754-b2e3-72c3b9e0ec06
 # ╠═055e1d55-709a-4c7a-89ff-d5c1c460c544
 # ╠═318174d3-2717-4618-8dc3-07413037fef4
 # ╠═cab5e5da-8609-11ec-2b2c-2d98fe66bb99
-# ╠═13b0c090-ff52-4eca-98a5-1306f859c58f
-# ╠═9c7d7e6c-d2d9-4754-b2e3-72c3b9e0ec06
 # ╠═226ae32f-36d4-4563-8af4-1aa9d16702c6
 # ╠═8c1ddae9-a9dd-4556-9027-4f701a064604
 # ╠═1a3b7318-d0a8-424a-96db-1deb03da716b
