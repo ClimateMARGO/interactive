@@ -869,10 +869,13 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 		invalidation.then(() => {
 			URL.revokeObjectURL(url)
 		})
-
-		img.type = mime
-		img.src = url
-		img.draggable = false
+		
+		// Call `fetch` on the URL to trigger the browser to make it ready. 
+		fetch(url).then(() => {
+			img.type = mime
+			img.src = url
+			img.draggable = false
+		})
 		
 		const clamp = (x,a,b) => Math.min(Math.max(x, a), b)
 		wrapper.transform = f => [
@@ -899,7 +902,7 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 
 		// If running for the first time
 		if(this == null) {
-		
+			console.log("Creating new plotclicktracker...")
 		
 			// will contain the currently dragging HTMLElement
 			const dragging = { current: undefined }
@@ -1887,7 +1890,7 @@ end
 # ╟─611c25ab-a454-4d52-b8fb-a58b0d1f5ca6
 # ╟─785c428d-d4f7-431e-94d7-039b0708a78a
 # ╟─7e540eaf-8700-4176-a96c-77ee2e4c384b
-# ╠═254ce01c-7976-4fe8-a980-fea1a61d7406
+# ╟─254ce01c-7976-4fe8-a980-fea1a61d7406
 # ╟─89752d91-9c8e-4203-b6f1-bdad41386b31
 # ╟─ff2709a4-516f-4066-b5b2-617ac0e5f20c
 # ╟─2821b722-75c2-4072-b142-d13553a84b7b
