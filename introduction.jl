@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.7
+# v0.18.0
 
 using Markdown
 using InteractiveUtils
@@ -21,9 +21,9 @@ begin
     Pkg.activate(mktempdir())
     Pkg.add([
         Pkg.PackageSpec(name="Plots", version="1"),
-        Pkg.PackageSpec(name="ClimateMARGO", rev="a141abe"),
+        Pkg.PackageSpec(name="ClimateMARGO", version=v"0.3.2"),
         Pkg.PackageSpec(name="PlutoUI", version="0.7"),
-        Pkg.PackageSpec(name="HypertextLiteral", version="0.7"),
+        Pkg.PackageSpec(name="HypertextLiteral", version="0.9"),
 		Pkg.PackageSpec(name="Underscores", version="2"),
     ])
 	
@@ -792,6 +792,9 @@ model_results(model::ClimateModel) = Dict(
 )
 
 
+# ╔═╡ eb0c961d-42cf-4219-a36e-cd492fa31f6b
+const cost_bars_scale = 70
+
 # ╔═╡ ec5d87a6-354b-4f1d-bb73-b3db08589d9b
 total_discounted(costs, model) = sum(costs .* model.domain.dt)
 
@@ -1184,7 +1187,7 @@ function plot_costs(result::ClimateModel;
 	)
 	
 	p = plot(; 
-		ylim=(0,6.1), 
+		ylim=(0,25.1), 
 		ylabel="trillion USD / year",
 	)
 	title === nothing || plot!(p; title=title)
@@ -1677,7 +1680,7 @@ function avoided_damages_bars(result)
 
   const costs = $(costs);
 
-  const scale = 16.0;
+  const scale = $(cost_bars_scale);
 
 
   const bar = (offset, width, color) =>
@@ -1740,7 +1743,7 @@ function cost_bars(result; offset_damages=false)
 
   const costs = $(costs);
 
-  const scale = 16.0;
+  const scale = $(cost_bars_scale);
 
   const bar = (offset, width, color) =>
     html`<span style="margin-left: \${offset}%; width: \${width}%; opacity: .7; display: inline-block; background: \${color}; height: 1.2em; margin-bottom: -.2em;"></span>`;
@@ -1894,6 +1897,7 @@ end
 # ╟─0a3be2ea-6af6-43c0-b8fb-e453bc2b703b
 # ╟─b7ca316b-6fa6-4c2e-b43b-cddb08aaabbb
 # ╟─7ffad0f8-082b-4ca1-84f7-37c08d5f7266
+# ╟─eb0c961d-42cf-4219-a36e-cd492fa31f6b
 # ╟─608b50e7-4419-4dfb-8d9e-5144d4034c05
 # ╟─31a30755-1d8b-451b-8c9a-2c32a3a1d0b4
 # ╟─ec5d87a6-354b-4f1d-bb73-b3db08589d9b
