@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.7
+# v0.18.0
 
 using Markdown
 using InteractiveUtils
@@ -21,9 +21,9 @@ begin
     Pkg.activate(mktempdir())
     Pkg.add([
         Pkg.PackageSpec(name="Plots", version="1"),
-        Pkg.PackageSpec(name="ClimateMARGO", rev="a141abe"),
+        Pkg.PackageSpec(name="ClimateMARGO", version=v"0.3.2"),
         Pkg.PackageSpec(name="PlutoUI", version="0.7"),
-        Pkg.PackageSpec(name="HypertextLiteral", version="0.7"),
+        Pkg.PackageSpec(name="HypertextLiteral", version="0.9"),
 		Pkg.PackageSpec(name="Underscores", version="2"),
     ])
 	
@@ -792,6 +792,9 @@ model_results(model::ClimateModel) = Dict(
 )
 
 
+# ╔═╡ eb0c961d-42cf-4219-a36e-cd492fa31f6b
+const cost_bars_scale = 70
+
 # ╔═╡ ec5d87a6-354b-4f1d-bb73-b3db08589d9b
 total_discounted(costs, model) = sum(costs .* model.domain.dt)
 
@@ -866,12 +869,13 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 		invalidation.then(() => {
 			URL.revokeObjectURL(url)
 		})
-
-		img.type = mime
-		img.src = url
-		img.draggable = false
 		
-		console.log($r)
+		// Call `fetch` on the URL to trigger the browser to make it ready. 
+		fetch(url).then(() => {
+			img.type = mime
+			img.src = url
+			img.draggable = false
+		})
 		
 		const clamp = (x,a,b) => Math.min(Math.max(x, a), b)
 		wrapper.transform = f => [
@@ -890,8 +894,7 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 			k.style.top = `\${r[1] * svgrect.height}px`
 		}
 		
-		
-		wrapper.fired = false
+		wrapper.fired_already = false
 		
 		
 		wrapper.last_render_time = Date.now()
@@ -899,7 +902,7 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 
 		// If running for the first time
 		if(this == null) {
-		
+			console.log("Creating new plotclicktracker...")
 		
 			// will contain the currently dragging HTMLElement
 			const dragging = { current: undefined }
@@ -934,13 +937,13 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 						(e.clientX - svgrect.left) / svgrect.width, 
 						(e.clientY - svgrect.top) / svgrect.height
 					]
-					if(wrapper.fired === false){
+					if(wrapper.fired_already === false){
 						const new_coord = wrapper.transform(f)
 						value[dragging.current.id] = new_coord
 						set_knob_coord(dragging.current, new_coord)
 		
 						wrapper.classList.toggle("wiggle", false)
-						wrapper.fired = true
+						wrapper.fired_already = true
 						wrapper.dispatchEvent(new CustomEvent("input"), {})
 					}
 				}
@@ -1189,7 +1192,7 @@ function plot_costs(result::ClimateModel;
 	)
 	
 	p = plot(; 
-		ylim=(0,6.1), left_margin=2.25Plots.Measures.mm,
+		ylim=(0,25.1), left_margin=2.25Plots.Measures.mm,
 		ylabel="trillion USD / year",
 	)
 	title === nothing || plot!(p; title=title)
@@ -1682,7 +1685,7 @@ function avoided_damages_bars(result)
 
   const costs = $(costs);
 
-  const scale = 16.0;
+  const scale = $(cost_bars_scale);
 
 
   const bar = (offset, width, color) =>
@@ -1745,7 +1748,7 @@ function cost_bars(result; offset_damages=false)
 
   const costs = $(costs);
 
-  const scale = 16.0;
+  const scale = $(cost_bars_scale);
 
   const bar = (offset, width, color) =>
     html`<span style="margin-left: \${offset}%; width: \${width}%; opacity: .7; display: inline-block; background: \${color}; height: 1.2em; margin-bottom: -.2em;"></span>`;
@@ -1867,7 +1870,7 @@ end
 # ╟─cff9f952-4850-4d55-bb8d-c0a759d1b7d8
 # ╟─c73c89a7-f652-4554-95e9-20f47a818996
 # ╟─a9b1e7fa-0318-41d8-b720-b8615c047bcd
-# ╠═6634bcf1-8af6-4000-9b00-a5b4c02596c6
+# ╟─6634bcf1-8af6-4000-9b00-a5b4c02596c6
 # ╟─424940e1-06ef-453a-8ffb-deb24dadb334
 # ╟─700f982d-85da-4dc1-9319-f3b2527d0308
 # ╟─cabc3214-1036-433b-aae1-6964bb780be8
@@ -1889,7 +1892,7 @@ end
 # ╟─611c25ab-a454-4d52-b8fb-a58b0d1f5ca6
 # ╟─785c428d-d4f7-431e-94d7-039b0708a78a
 # ╟─7e540eaf-8700-4176-a96c-77ee2e4c384b
-# ╠═254ce01c-7976-4fe8-a980-fea1a61d7406
+# ╟─254ce01c-7976-4fe8-a980-fea1a61d7406
 # ╟─89752d91-9c8e-4203-b6f1-bdad41386b31
 # ╟─ff2709a4-516f-4066-b5b2-617ac0e5f20c
 # ╟─2821b722-75c2-4072-b142-d13553a84b7b
@@ -1899,6 +1902,7 @@ end
 # ╟─0a3be2ea-6af6-43c0-b8fb-e453bc2b703b
 # ╟─b7ca316b-6fa6-4c2e-b43b-cddb08aaabbb
 # ╟─7ffad0f8-082b-4ca1-84f7-37c08d5f7266
+# ╟─eb0c961d-42cf-4219-a36e-cd492fa31f6b
 # ╟─608b50e7-4419-4dfb-8d9e-5144d4034c05
 # ╟─31a30755-1d8b-451b-8c9a-2c32a3a1d0b4
 # ╟─ec5d87a6-354b-4f1d-bb73-b3db08589d9b
