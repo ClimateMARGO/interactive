@@ -236,7 +236,7 @@ let
 	</tbody>
 	</table>
 		"""),
-		"#c0ecff"
+		"#c0ecff33"
 	)
 end
 
@@ -269,8 +269,8 @@ begin
 	end
 	plot!(p_emit, t(m), 0. *t(m), linestyle=:dash, color=:black, alpha=0.3, linewidth = 2.5, label="")
 	plot!(p_emit, ylim=(-5., 15.), xlim=(t(m)[1], t(m)[end]))
-	plot!(p_emit, ylabel="effective emissions [ppm/year]", xlabel="year")
-	plot!(p_emit, size=(700, 325), margins=1.75Plots.Measures.mm)
+	plot!(p_emit, ylabel="emissions [ppm/year]", xlabel="year")
+	plot!(p_emit, size=(700, 225), margins=2.75Plots.Measures.mm)
 end
 
 # ╔═╡ 13b0c090-ff52-4eca-98a5-1306f859c58f
@@ -286,7 +286,7 @@ begin
 	end
 	plot!(ylabel="warming (relative to P-I)", xlabel="year")
 	plot!(yticks=[-1., 0., 1., 1.5, 2., 2.5, 3., 4., 5., 6., 7., 8., 9, 10.])
-	plot!(size=(700, 325), margins=1.75Plots.Measures.mm)
+	plot!(size=(700, 250), margins=2.75Plots.Measures.mm)
 	plot!(legend=:topleft)
 end
 
