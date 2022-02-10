@@ -1048,6 +1048,8 @@ md"""
 
 This interactive article lets *you*– the reader– run [MARGO](https://github.com/ClimateMARGO/ClimateMARGO.jl), a simple climate model, to explore what it takes to avoid the catastrophic impacts of global warming. The code in this webpage is *reactive*, meaning that the graphs and numbers automatically update whenever you change the climate model's inputs.
 
+*By [Henri F. Drake](https://hdrake.github.io/) and Fons van der Plas*
+
 ## _Can you limit human-caused global warming to "well-below 2ºC"?_
 
 """
@@ -1190,7 +1192,7 @@ function plot_costs(result::ClimateModel;
 	)
 	
 	p = plot(; 
-		ylim=(0,25.1), 
+		ylim=(0,25.1), left_margin=2.25Plots.Measures.mm,
 		ylabel="trillion USD / year",
 	)
 	title === nothing || plot!(p; title=title)
@@ -1288,7 +1290,7 @@ end
 function plot_emissions(result::ClimateModel)
 	
 	p = plot(; 
-		ylim=(-3,11), 
+		ylim=(-3,11), left_margin=1.75Plots.Measures.mm, 
 		ylabel="ppm / year",
 		title="Global CO₂ₑ emissions",
 	)
@@ -1608,7 +1610,7 @@ control_enabled_9 = MRGA(
 	enable_R_9,
 	enable_G_9,
 	enable_A_9,
-)
+);
 
 # ╔═╡ 242f3109-244b-4884-a0e9-6ea8950ca47e
 control_cost_9 = MRGA(
@@ -1616,7 +1618,7 @@ control_cost_9 = MRGA(
 	Float64(cost_R_9),
 	Float64(cost_G_9),
 	Float64(cost_A_9),
-)
+);
 
 # ╔═╡ f861935a-8b03-426e-aebe-6963e034ad49
 output_9 = let
@@ -1843,10 +1845,10 @@ end
 # ╟─6bcb9b9e-e0ab-45d3-b9b9-3d7282f89df6
 # ╟─a0a1bb20-ec9b-446d-a36a-272840b8d35c
 # ╟─8e89f521-c19d-4f87-9497-f9b61c19c176
-# ╟─a83e47fa-4b48-4bbc-b210-382d1cf19f55
-# ╟─242f3109-244b-4884-a0e9-6ea8950ca47e
 # ╟─6978acad-9cac-4490-85fb-7e43d9558aca
 # ╟─7a435e46-4f36-4037-a9a6-d296b20bf6ac
+# ╟─a83e47fa-4b48-4bbc-b210-382d1cf19f55
+# ╟─242f3109-244b-4884-a0e9-6ea8950ca47e
 # ╟─4e1524e9-27d2-45a7-9ebd-21e6e369c4a7
 # ╟─0a126a12-7b89-4f22-ad66-b64965cd1d49
 # ╠═1c8d2d00-b7d9-11eb-35c4-47f2a2aa1593
