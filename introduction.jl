@@ -858,8 +858,8 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 		const aspect_ratio = $(r.aspect_ratio)
 		
 		const wrapper = this ?? html`
-			<div>
-				<img style='width: 100%; aspect-ratio: \${aspect_ratio}'>
+			<div style='touch-action: none;'>
+				<img style='width: 100%; aspect-ratio: \${aspect_ratio}; background: white;'>
 				\${Object.keys(initial).map(knob)}
 			</div>
 		`
