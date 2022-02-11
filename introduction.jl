@@ -845,7 +845,7 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 		const names = $(names_js)
 		
 
-		const body = $(HypertextLiteral.JavaScript(PlutoRunner.publish_to_js(plot_render)))
+		const body = $(PlutoRunner.publish_to_js(plot_render))
 		const mime = "image/svg+xml"
 
 		
@@ -871,10 +871,16 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 		})
 		
 		// Call `fetch` on the URL to trigger the browser to make it ready. 
-		fetch(url).then(() => {
-			img.type = mime
-			img.src = url
-			img.draggable = false
+		let fetch_promise = fetch(url)
+		Promise.race([
+			fetch_promise, 
+   			invalidation.then(x => null)
+		]).then((r) => {
+			if(r != null) {
+				img.type = mime
+				img.src = url
+				img.draggable = false
+			}
 		})
 		
 		const clamp = (x,a,b) => Math.min(Math.max(x, a), b)
@@ -929,6 +935,7 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 			////
 			// Event listener for pointer move
 		
+			const allow_only_one_event_per_render = false
 			const on_pointer_move = (e) => {
 				if(Object.keys(initial).includes(dragging.current.id)){
 
@@ -937,7 +944,7 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 						(e.clientX - svgrect.left) / svgrect.width, 
 						(e.clientY - svgrect.top) / svgrect.height
 					]
-					if(wrapper.fired_already === false){
+					if(!allow_only_one_event_per_render || wrapper.fired_already === false){
 						const new_coord = wrapper.transform(f)
 						value[dragging.current.id] = new_coord
 						set_knob_coord(dragging.current, new_coord)
