@@ -108,7 +108,7 @@ Precompiling project...
 
 # DigitalOcean
 
-You can log in to digitalocean.com to access our server. 
+You can log in to digitalocean.com to access our server. *Note: on Nov 7 2022, I moved the server to a new Team, "MIT Julia Lab Pluto". I sent Henri an invite email to join the team. https://github.com/fonsp, https://github.com/pankgeorg and https://github.com/edelman also have access.*
 
 ## Monitoring
 
