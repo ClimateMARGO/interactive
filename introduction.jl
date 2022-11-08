@@ -465,7 +465,7 @@ margo-knob-label {
 }
 
 .wiggle margo-knob {
-	animation: wiggle 5s ease-in-out;
+	animation: wiggle-margo-knob 5s ease-in-out;
 	animation-delay: 600ms;
 }
 .wiggle margo-knob-label {
@@ -483,7 +483,7 @@ margo-knob-label {
 	}
 }
 
-@keyframes wiggle {
+@keyframes wiggle-margo-knob {
 	0% {
 		transform: translate(-8px, -16px);
 	}
@@ -1055,7 +1055,7 @@ md"""
 
 This interactive article lets *you*– the reader– run [MARGO](https://github.com/ClimateMARGO/ClimateMARGO.jl), a simple climate model, to explore what it takes to avoid the catastrophic impacts of global warming. The code in this webpage is *reactive*, meaning that the graphs and numbers automatically update whenever you change the climate model's inputs.
 
-*By [Henri F. Drake](https://hdrake.github.io/) and Fons van der Plas*
+*By [Henri F. Drake](https://hdrake.github.io/) and [Fons van der Plas](https://github.com/fonsp/)*
 
 ## _Can you limit human-caused global warming to "well-below 2ºC"?_
 
@@ -1828,7 +1828,7 @@ end
 # ╟─50d24c91-61ae-4544-98fa-5749bafe3d41
 # ╟─cf5f7459-fbbe-4595-baa4-b6b85017005a
 # ╟─ec325089-8418-4fed-ac0e-e8ae21b433ab
-# ╟─ff2b1c0a-e419-4f41-aa3b-d017642ffc13
+# ╠═ff2b1c0a-e419-4f41-aa3b-d017642ffc13
 # ╟─29aa932b-9835-4d13-84e2-5ccf380a21ea
 # ╟─02851ee9-8050-4821-b3c9-1f65c9b8135b
 # ╟─d796cb71-0e34-41ce-bc97-45c68812046d
