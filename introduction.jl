@@ -21,7 +21,7 @@ begin
     Pkg.activate(mktempdir())
     Pkg.add([
         Pkg.PackageSpec(name="Plots", version="1"),
-        Pkg.PackageSpec(name="ClimateMARGO", version=v"0.3.2"),
+        Pkg.PackageSpec(name="ClimateMARGO", version=v"0.3.3"),
         Pkg.PackageSpec(name="PlutoUI", version="0.7"),
         Pkg.PackageSpec(name="HypertextLiteral", version="0.9"),
 		Pkg.PackageSpec(name="Underscores", version="2"),
