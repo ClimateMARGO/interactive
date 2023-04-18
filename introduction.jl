@@ -1063,7 +1063,7 @@ This interactive article lets *you*– the reader– run [MARGO](https://github.
 
 # ╔═╡ 6533c123-34fe-4c0d-9ecc-7fef11379253
 md"""
-![image](https://user-images.githubusercontent.com/6933510/118835384-3ad36c80-b8c3-11eb-995d-70cba3b23846.png)
+![image](https://raw.githubusercontent.com/ClimateMARGO/MARGO-gifs/0824fda21d17a846c0f8c594c6cac9630d9ebcdf/Margo_schematic.png)
 
 _From: [ClimateMARGO.jl](https://github.com/ClimateMARGO/ClimateMARGO.jl)_
 """
