@@ -1055,7 +1055,7 @@ md"""
 
 This interactive article lets *you*– the reader– run [MARGO](https://github.com/ClimateMARGO/ClimateMARGO.jl), a simple climate model, to explore what it takes to avoid the catastrophic impacts of global warming. The code in this webpage is *reactive*, meaning that the graphs and numbers automatically update whenever you change the climate model's inputs.
 
-*By [Henri F. Drake](https://hdrake.github.io/) and [Fons van der Plas](https://github.com/fonsp/)*
+*By [Henri F. Drake](https://faculty.sites.uci.edu/drakelab/people/) and [Fons van der Plas](https://github.com/fonsp/)*
 
 ## _Can you limit human-caused global warming to "well-below 2ºC"?_
 
@@ -1072,17 +1072,17 @@ _From: [ClimateMARGO.jl](https://github.com/ClimateMARGO/ClimateMARGO.jl)_
 md"""
 ## Overview of the climate problem: from greenhouse gas emissions to climate suffering
 
-Human emissions of greenhouse gases, especially Carbon Dioxide (CO₂), increase the stock of greenhouse gases in the atmosphere. For every molecule of CO₂ emitted, about 50% are taken up by plants, soils, or the ocean within a few years, while the rest remains in the atmosphere. (The effects of other greenhouse gases, such as Methane and CFCs, and other forcing agents, can approximately be converted into the "CO₂-equivalent"– or CO₂ₑ– concentrations that would lead to the same climate forcing).
+Human emissions of greenhouse gases, especially Carbon Dioxide (CO₂), increase the stock of greenhouse gases in the atmosphere. For every molecule of CO₂ emitted, about 50% are taken up by plants, soils, or the ocean within a few years, while the rest remains in the atmosphere for millenia. (The effects of other greenhouse gases, such as Methane and CFCs, and other forcing agents, can approximately be converted into the "CO₂-equivalent"– or CO₂ₑ– concentrations that would lead to the same climate forcing).
 
-Greenhouse gases get their name because they trap invisible heat radiation emitted by Earth's surface and atmosphere from escaping to space, much like greenhouses trap hot air from rising when it is warmed by the Sun. This "greenhouse effect" causes the temperature to rise globally, although some places warm *more* and *faster* than others. Warmer temperatures exacerbate both the frequency and intensity of "natural" disasters, such as heat waves, coastal flooding from major hurricanes, and inland flooding from torrential rain. These climate impacts lead to enhanced climate suffering, which economics typically attempt to quantify suffering in terms of lost money or welfare.
+Greenhouse gases get their name because they trap invisible heat radiation emitted by Earth's surface and atmosphere from escaping to space, much like greenhouses trap hot air from rising when it is warmed by the Sun. This "greenhouse effect" causes air temperatures to rise globally, although some places warm *more* and *faster* than others. Warmer temperatures exacerbate both the frequency and intensity of "natural" disasters, such as heat waves, coastal flooding from major hurricanes, and inland flooding from torrential rain, and drought. These climate impacts lead to enhanced climate suffering, which economists typically attempt to quantify in terms of lost money or welfare.
 
-In the interactive article below, we invite you to explore the benefits of emissions mitigation and carbon dioxide removal in reducing climate suffering, and the trade-offs with their costs.
+In the interactive article below, we invite you to explore the benefits of emissions mitigation and carbon dioxide removal in reducing climate suffering, while also taking into account trade-offs with their implementation costs.
 """
 
 # ╔═╡ ec325089-8418-4fed-ac0e-e8ae21b433ab
 md"""
 ## Mitigating emissions
-Human greenhouse gas emissions are the result of fossil fuel burning (e.g. for transportation, electricity generation, heating, industry), unsustainable agriculture, and land use changes. We refer to any actions or policies that reduce these emissions as *mitigation*.
+Anthropogenic (i.e. human-caused) greenhouse gas emissions are the result of fossil fuel burning (e.g. for transportation, electricity generation, heating, industry), unsustainable agriculture, and land use changes. We refer to any actions or policies that reduce these emissions as *mitigation*.
 
 The MARGO model lumps all potential mitigation into a single number: the percentage of *baseline* emissions that are mitigated in a given year. Baseline emissions are the emissions that would arise in a hypothetical future world absent of climate policy. In our hypothetical no-policy world, we assume that emissions will go to zero by 2150 even without climate policy, perhaps because of public health concerns regarding other forms of air pollution, the development of new zero-carbon technologies, or running out of extractable fossil fuels resources.
 
@@ -1112,7 +1112,7 @@ md"""
 
 		md"""### 3. Cost-benefit analysis
 
-		Unfortunately, mitigating CO₂ₑ emissions also carries a cost. In MARGO, the *marginal* cost of mitigation is proportional to the fraction of CO₂ₑ emissions that have been mitigated in a given year, increasing up to a maximum of $70 per metric ton of CO₂ₑ at 100% mitigation.
+		Unfortunately, mitigating CO₂ₑ emissions also carries a cost. In MARGO, the *marginal* cost of mitigation is proportional to the fraction of CO₂ₑ emissions that have been mitigated in a given year, increasing up to a maximum of \$70 per metric ton of CO₂ₑ at 100% mitigation.
 
 		This naturally leads to a **cost-benefit analysis**. We search for the most beneficial, or *optimal*, scenario: the one with the *maximum net present benefits*. In the figure below, try finding a mitigation strategy that optimizes these _Net benefits_.
 		"""
@@ -1127,7 +1127,7 @@ end
 md"""
 ## Picking up the slack: carbon dioxide removal
 
-While substantial emissions mitigations are necessary to reduce future climate suffering, they can not make up for the hundreds of billions of tons of CO₂ that humans have already emitted. However, both natural and technological methods for removing CO₂ from the atmosphere exist. Although they are presently miniscule compared to the tens-of-gigatons scale of global emissions, experts expect that they will play a key role in the future. In MARGO, we do not distinguish between different carbon dioxide removal methods, and further assume that the carbon is stored permanently.
+While substantial emissions mitigations are necessary to reduce future climate suffering, they can not make up for the hundreds of billions of tons of CO₂ that humans have already emitted, or those that we inevitably will in the coming few decades. However, both natural and technological methods for removing CO₂ from the atmosphere exist. Although they are presently miniscule compared to the tens-of-gigatons scale of global emissions, and quite expensive, experts expect that they will play a key role in the future. In MARGO, we do not distinguish between different carbon dioxide removal methods, and further assume that the carbon is stored permanently.
 
 *Drag the yellow dot in the figure below to modify the amount and timing of carbon dioxide removal*.
 """
