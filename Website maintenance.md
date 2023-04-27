@@ -28,7 +28,7 @@ You can use the `exclude` setting to control which notebooks are exported, or wh
 
 # How to update the version of Pluto or PlutoSliderServer
 
-We pinned the version of Pluto and PlutoSliderServer using `pluto-deployment-environment/Manifest.toml`. To use newer versions, you need to update manually using the pkg REPL. Use Julia 1.7.
+We pinned the version of Pluto and PlutoSliderServer using `pluto-deployment-environment/Manifest.toml`. To use newer versions, you need to update manually using the pkg REPL. Use Julia 1.8.
 
 ```sh
 ➜  ~ cd Documents/margo-interactive 
@@ -43,7 +43,7 @@ README.md
   (_)     | (_) (_)    |
    _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
   | | | | | | |/ _` |  |
-  | | |_| | | | (_| |  |  Version 1.7.0 (2021-11-30)
+  | | |_| | | | (_| |  |  Version 1.8.0
  _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org/ release
 |__/                   |
 
