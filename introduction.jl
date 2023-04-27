@@ -1156,7 +1156,7 @@ blob(
 md"""
 # Appendix
 
-This interactive page is a [Pluto notebook](https://github.com/fonsp/Pluto.jl), which means that it contains its own source code, and we encourage you to take a look behind the scenes. Use the button "Edit or run" on the top right to modify the notebook and reproduce the result yourself.
+This interactive page is a [Pluto notebook](https://plutojl.org/), which means that it contains its own source code, and we encourage you to take a look behind the scenes. Use the button "Edit or run" on the top right to modify the notebook and reproduce the result yourself.
 """
 
 # ╔═╡ d5ab2398-2904-4b44-a855-e4729996bc0d
