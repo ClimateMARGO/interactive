@@ -1376,7 +1376,7 @@ function plot_concentrations(result::ClimateModel;
 end
 
 # ╔═╡ c73c89a7-f652-4554-95e9-20f47a818996
-function plot_controls(controls::MRGA; title=nothing)
+function plot_controls(controls::MRGA; title=nothing, reverse=False)
 	
 	p = plot(; 
 		ylim=(0,1),
@@ -1386,11 +1386,17 @@ function plot_controls(controls::MRGA; title=nothing)
 	for (tech, c) in enumerate(controls)
 		if c !== nothing
 			which = tech === :M ? (years .< end_of_oil) : eachindex(years)
-			
-			plot!(p,
-				years[which], c[which];
-				pp[tech]...
-			)
+			if ~reverse
+				plot!(p,
+					years[which], c[which];
+					pp[tech]...
+				)
+			else
+				plot!(p,
+					years[which], -c[which];
+					pp[tech]...
+				)
+			end
 		end
 	end
 
@@ -1405,7 +1411,7 @@ end
 	local y = input_x["G"][2]
 	
 	controls_x = MRGA(
-		G=expcontrol(t, y)
+		G=-expcontrol(t, y)
 	)
 	# controls_x = MRGA(
 	# 	G=gaussish(input_x["G"]...),
@@ -1416,13 +1422,10 @@ end
 
 		
 	plotclicktracker2(
-		plot_controls(controls_x; title="Controlled reduction of aerosols (1=full reduction of 1.5 W/m2)"),
+		plot_controls(controls_x; title="Controlled reduction of aerosols (1=full reduction of 1.5 W/m2)", reverse=true),
 		initial_x
 	)
 end
-
-# ╔═╡ 690d1a4e-533f-4a0a-a6c9-c2799191e8aa
-controls_x.G=-controls_x.G;
 
 # ╔═╡ 6634bcf1-8af6-4000-9b00-a5b4c02596c6
 function plot_emissions(result::ClimateModel)
@@ -2029,7 +2032,6 @@ end
 # ╟─38ff6efc-ccf1-4ca3-8437-152784a98a9e
 # ╟─51037451-0fea-4021-8824-56911970b97b
 # ╟─373cba19-511e-483e-8bfe-14bbb92d5a21
-# ╟─690d1a4e-533f-4a0a-a6c9-c2799191e8aa
 # ╟─37c056fc-a3e9-47ad-89d5-72e6a36a243d
 # ╟─5a80d968-2664-4b4f-89d1-845279e419ee
 # ╟─4e1524e9-27d2-45a7-9ebd-21e6e369c4a7
