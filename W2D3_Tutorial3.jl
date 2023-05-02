@@ -1376,7 +1376,7 @@ function plot_concentrations(result::ClimateModel;
 end
 
 # ╔═╡ c73c89a7-f652-4554-95e9-20f47a818996
-function plot_controls(controls::MRGA; title=nothing, reverse=False)
+function plot_controls(controls::MRGA; title=nothing, reverse=false)
 	
 	p = plot(; 
 		ylim=(0,1),
