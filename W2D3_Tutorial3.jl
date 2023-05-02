@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.24
+# v0.19.25
 
 using Markdown
 using InteractiveUtils
@@ -1497,7 +1497,7 @@ end
 
 # ╔═╡ 700f982d-85da-4dc1-9319-f3b2527d0308
 function plot_temp(result::ClimateModel)
-	Tmax = 5
+	Tmax = 6
 	
 	# setup
 	p = plot(; 
@@ -2026,10 +2026,10 @@ end
 # ╟─7a435e46-4f36-4037-a9a6-d296b20bf6ac
 # ╟─a83e47fa-4b48-4bbc-b210-382d1cf19f55
 # ╟─242f3109-244b-4884-a0e9-6ea8950ca47e
-# ╠═38ff6efc-ccf1-4ca3-8437-152784a98a9e
-# ╠═51037451-0fea-4021-8824-56911970b97b
+# ╟─38ff6efc-ccf1-4ca3-8437-152784a98a9e
+# ╟─51037451-0fea-4021-8824-56911970b97b
 # ╟─373cba19-511e-483e-8bfe-14bbb92d5a21
-# ╠═690d1a4e-533f-4a0a-a6c9-c2799191e8aa
+# ╟─690d1a4e-533f-4a0a-a6c9-c2799191e8aa
 # ╟─37c056fc-a3e9-47ad-89d5-72e6a36a243d
 # ╟─5a80d968-2664-4b4f-89d1-845279e419ee
 # ╟─4e1524e9-27d2-45a7-9ebd-21e6e369c4a7
