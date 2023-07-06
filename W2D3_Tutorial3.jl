@@ -40,6 +40,15 @@ begin
 	Plots.default(linewidth=5)
 end;
 
+# ╔═╡ 1d2e9649-4aa7-49cd-b8a4-d4137393db62
+html"""
+<style>
+.edit_or_run > button {
+	display: none !important;
+}
+</style>
+"""
+
 # ╔═╡ 9a48a08e-7281-473c-8afc-7ad3e0771269
 TableOfContents()
 
@@ -1101,7 +1110,7 @@ Content editors: Jenna Pearson, Chi Zhang, Ohad Zivan
 
 Production editors: Wesley Banfield, Jenna Pearson, Chi Zhang, Ohad Zivan
 
-Our 2023 Sponsors: NASA TOPS
+Our 2023 Sponsors: NASA TOPS and Google DeepMind
 """
 
 # ╔═╡ 2dacd4cd-68bd-4c31-857e-d8cab04b5180
@@ -1122,7 +1131,7 @@ md"""
 """
 
 # ╔═╡ eda48867-7998-400b-98c9-fcd7ef762dc7
-md"""Helper functions at end of notebook"""
+md"""Helper functions at end of notebook. THe source code for this notebook can be found at [https://github.com/ClimateMARGO/interactive/blob/main/W2D3_Tutorial3.jl](https://github.com/ClimateMARGO/interactive/blob/6c3d0261b797eb922925761090f0b9fcd43602bd/W2D3_Tutorial3.jl)"""
 
 # ╔═╡ 331c45b7-b5f2-4a78-b180-5b918d1806ee
 md"""
@@ -1251,7 +1260,7 @@ blob(
 md"""
 # Section 3: From Unaware to Purposeful Solar Radiation Management
 
-Various regulations arising from well-established public health concerns (mostly regarding air quality) have been successful at significantly reducing over the last decades the amount of aerosols we emit when burning fossil fuels (e.g. sulfur emissions from freight shipping underwent a legislated reduction by 80% in 2020; sulfate is the strongest forcing aerosol). 
+Various regulations arising from well-established public health concerns (mostly regarding air quality) have been successful at significantly reducing over the last decades the amount of aerosols we emit when burning fossil fuels (e.g. sulfur emissions from freight shipping underwent a legislated reduction by 80% in 2020; see [Carbon Brief](https://www.carbonbrief.org/analysis-how-low-sulphur-shipping-rules-are-affecting-global-warming/)). 
 
 Over the year or so that it takes the typical aerosol particle to fall out of the atmosphere, they reflect sunlight to space and have an effective negative contribution to radiative forcing. The IPCC estimates at least 0.5 degrees of warming has been masked by yearly sulfur emissions alone (i.e. if we stopped emitting sulfur the global average temperature would go up by 0.5 degrees as existing sulfur aerosols fall out of the atmosphere). The effective warming effects of reducing aerosol emissions are typically absent from assessments of how aerosols affect public health. 
 
@@ -2000,6 +2009,7 @@ function MR(x::T,y::T) where T
 end
 
 # ╔═╡ Cell order:
+# ╟─1d2e9649-4aa7-49cd-b8a4-d4137393db62
 # ╟─9a48a08e-7281-473c-8afc-7ad3e0771269
 # ╟─1bc00b68-15c5-48fe-9994-dc2f543542df
 # ╟─2dacd4cd-68bd-4c31-857e-d8cab04b5180
