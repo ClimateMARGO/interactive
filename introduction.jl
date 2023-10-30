@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.18.0
+# v0.19.30
 
 using Markdown
 using InteractiveUtils
@@ -711,42 +711,6 @@ function setfieldconvert!(value, name::Symbol, x)
     setfield!(value, name, convert(typeof(getfield(value, name)), x))
 end
 
-# ╔═╡ 371991c7-13dd-46f6-a730-ad89f43c6f0e
-function enforce_maxslope!(controls;
-		dt=step(years),
-		max_slope=Dict("mitigate"=>1. /40., "remove"=>1. /40., "geoeng"=>1. /80., "adapt"=> 0.)
-    )
-    controls.mitigate[1] = 0.0
-    controls.remove[1] = 0.0
-    controls.geoeng[1] = 0.0
-    # controls.adapt[1] = 0.0
-
-
-    for i in 2:length(controls.mitigate)
-        controls.mitigate[i] = clamp(
-            controls.mitigate[i], 
-            controls.mitigate[i-1] - max_slope["mitigate"]*dt, 
-            controls.mitigate[i-1] + max_slope["mitigate"]*dt
-        )
-        controls.remove[i] = clamp(
-            controls.remove[i], 
-            controls.remove[i-1] - max_slope["remove"]*dt, 
-            controls.remove[i-1] + max_slope["remove"]*dt
-        )
-        controls.geoeng[i] = clamp(
-            controls.geoeng[i], 
-            controls.geoeng[i-1] - max_slope["geoeng"]*dt, 
-            controls.geoeng[i-1] + max_slope["geoeng"]*dt
-        )
-        controls.adapt[i] = clamp(
-            controls.adapt[i], 
-            controls.adapt[i-1] - max_slope["adapt"]*dt, 
-            controls.adapt[i-1] + max_slope["adapt"]*dt
-        )
-    end
-end
-
-
 # ╔═╡ b7ca316b-6fa6-4c2e-b43b-cddb08aaabbb
 function costs_dict(costs, model)
     Dict(
@@ -1045,6 +1009,8 @@ begin
 	Base.any(m::MRGA{Bool}) = m.M || m.R || m.G || m.A
 
 	Base.all(m::MRGA{Bool}) = m.M && m.R && m.G && m.A
+
+	Base.eltype(m::MRGA{T}) where T = T
 
 	MRGA
 end
@@ -1414,134 +1380,6 @@ md"""
 ## Running the model
 """
 
-# ╔═╡ 611c25ab-a454-4d52-b8fb-a58b0d1f5ca6
-function forward_controls_temp(controls::MRGA=MRGA(), model_parameters=default_parameters())
-    
-    
-    model = ClimateModel(model_parameters)
-
-    translations = Dict(
-        :M => :mitigate,
-        :R => :remove,
-        :G => :geoeng,
-        :A => :adapt,
-    )
-    for (k, v) in enumerate(controls)
-		if v !== nothing
-	        setfieldconvert!(model.controls, translations[Symbol(k)], copy(v))
-		end
-    end
-
-    enforce_maxslope!(model.controls)
-
-	model
-    # return Dict(
-    #     :model_parameters => model_parameters,
-    #     model_results(model)...
-    # )
-end
-
-# ╔═╡ 9aa73ce0-cec6-4d53-bbbc-f5c85de7b521
-@initially initial_1 @bind input_1 begin
-	
-	local t = input_1["M"][1]
-	local y = input_1["M"][2]
-	
-	controls_1 = MRGA(
-		M=gaussish(t, clamp(.07 * (10 - y), 0, 1)),
-		R=gaussish(t, clamp(.07 * (10 - y) * 0.25, 0, 1)),
-	)
-	
-	result_1 = forward_controls_temp(controls_1)
-	
-	plotclicktracker2(
-		plot_emissions(result_1),
-		initial_1
-	)
-end
-
-# ╔═╡ 65d31fbf-322d-459a-a2dd-2894edbecc4d
-plot_temp(result_1)
-
-# ╔═╡ ff2b1c0a-e419-4f41-aa3b-d017642ffc13
-@initially initial_2 @bind input_2 begin
-	
-	
-	controls_2 = MRGA(
-		M=gaussish(input_2["M"]...),
-	)
-	
-	result_2 = forward_controls_temp(controls_2)
-	
-	plotclicktracker2(
-		plot_controls(controls_2; title="Deployment of mitigation"),
-		initial_2
-	)
-end
-
-# ╔═╡ 02851ee9-8050-4821-b3c9-1f65c9b8135b
-if which_graph_2 == "Emissions"
-	plot_emissions(result_2)
-elseif which_graph_2 == "Concentrations"
-	plot_concentrations(result_2; relative_to_preindustrial=true)
-else
-	plot_temp(result_2)
-end
-
-# ╔═╡ f4203dcf-b251-4e2b-be07-922bc7c4496d
-(@initially initial_3 @bind input_3 begin
-	
-	
-	controls_3 = MRGA(
-		M=gaussish(input_3["M"]...),
-	)
-	
-	result_3 = forward_controls_temp(controls_3)
-	
-	plotclicktracker2(
-		plot_controls(controls_3; title="Deployment of mitigation"),
-		initial_3
-	)
-end) |> cloak("cost_benefits_narrative_input")
-
-# ╔═╡ 3e26d311-6abc-4b2c-ada4-f8a3171d9f75
-if cost_benefits_narrative_slide == 1
-	local uncontrolled = ClimateModel(default_parameters())
-	plot_costs(uncontrolled; show_controls=false, show_baseline=false)
-elseif cost_benefits_narrative_slide == 2
-	plot_costs(result_3; show_controls=false)
-else
-	plot_costs(result_3)
-end
-
-# ╔═╡ aac86adf-465f-464f-b258-406c2e55b82f
-@initially initial_4 @bind input_4 begin
-	
-	
-	controls_4 = MRGA(
-		M=gaussish(input_4["M"]...),
-		R=gaussish(input_4["R"]...),
-	)
-	
-	result_4 = forward_controls_temp(controls_4)
-	
-	plotclicktracker2(
-		plot_controls(controls_4; title="Deployment of mitigation"),
-		initial_4
-	)
-end
-
-# ╔═╡ a751fb75-952e-41d4-a8b5-aba512c10e55
-if which_graph_4 == "Emissions"
-	plot_emissions(result_4)
-elseif which_graph_4 == "Concentrations"
-	plot_concentrations(result_4; relative_to_preindustrial=true)
-elseif which_graph_4 == "Temperature"
-	plot_temp(result_4)
-else
-	plot_costs(result_4)
-end
-
 # ╔═╡ 89752d91-9c8e-4203-b6f1-bdad41386b31
 shortname = MRGA("M","R","G","A")
 
@@ -1662,6 +1500,176 @@ plot!(plot_temp(output_9.result),
 	lw=2,
 	pp.T_max...
 	)
+
+# ╔═╡ 371991c7-13dd-46f6-a730-ad89f43c6f0e
+function enforce_maxslope!(controls::MRGA;
+		dt=step(years),
+		max_slope=MRGA(1. /40., 1. /40., 1. /80., 0.)
+    )
+
+	
+	controls.M === nothing || (controls.M[begin] = zero(eltype(controls.M)))
+	controls.R === nothing || (controls.R[begin] = zero(eltype(controls.R)))
+	controls.G === nothing || (controls.G[begin] = zero(eltype(controls.G)))
+	# controls.A === nothing || (controls.A[begin] = zero(eltype(controls.A)))
+
+	for (k, v) in enumerate(controls)
+		if v !== nothing
+	    	for i in eachindex(v)[begin+1:end]
+				v[i] = clamp(
+		            v[i], 
+		            v[i-1] - max_slope[k]*dt, 
+		            v[i-1] + max_slope[k]*dt
+		        )
+			end
+		end
+    end
+
+	controls
+end
+
+# ╔═╡ f47bcdbd-304d-4b20-9a8f-8c3e3f998e0d
+function enforce_maxslope!(controls::ClimateMARGO.Models.Controls; kwargs...)
+
+	old = MRGA(controls.mitigate, controls.remove, controls.geoeng, controls.adapt)
+
+	enforce_maxslope!(old; kwargs...)
+
+    controls.mitigate = old.M
+    controls.remove = old.R
+    controls.geoeng = old.G
+    controls.adapt = old.A
+
+	controls
+end
+
+# ╔═╡ 611c25ab-a454-4d52-b8fb-a58b0d1f5ca6
+function forward_controls_temp(controls::MRGA=MRGA(), model_parameters=default_parameters())
+    
+    
+    model = ClimateModel(model_parameters)
+
+    translations = Dict(
+        :M => :mitigate,
+        :R => :remove,
+        :G => :geoeng,
+        :A => :adapt,
+    )
+    for (k, v) in enumerate(controls)
+		if v !== nothing
+	        setfieldconvert!(model.controls, translations[Symbol(k)], copy(v))
+		end
+    end
+
+    enforce_maxslope!(model.controls)
+
+	model
+    # return Dict(
+    #     :model_parameters => model_parameters,
+    #     model_results(model)...
+    # )
+end
+
+# ╔═╡ 9aa73ce0-cec6-4d53-bbbc-f5c85de7b521
+@initially initial_1 @bind input_1 begin
+	
+	local t = input_1["M"][1]
+	local y = input_1["M"][2]
+	
+	controls_1 = MRGA(
+		M=gaussish(t, clamp(.07 * (10 - y), 0, 1)),
+		R=gaussish(t, clamp(.07 * (10 - y) * 0.25, 0, 1)),
+	)
+	
+	result_1 = forward_controls_temp(controls_1)
+	
+	plotclicktracker2(
+		plot_emissions(result_1),
+		initial_1
+	)
+end
+
+# ╔═╡ 65d31fbf-322d-459a-a2dd-2894edbecc4d
+plot_temp(result_1)
+
+# ╔═╡ ff2b1c0a-e419-4f41-aa3b-d017642ffc13
+@initially initial_2 @bind input_2 begin
+	
+	
+	controls_2 = enforce_maxslope!(MRGA(
+		M=gaussish(input_2["M"]...),
+	))
+	
+	result_2 = forward_controls_temp(controls_2)
+	
+	plotclicktracker2(
+		plot_controls(controls_2; title="Deployment of mitigation"),
+		initial_2
+	)
+end
+
+# ╔═╡ 02851ee9-8050-4821-b3c9-1f65c9b8135b
+if which_graph_2 == "Emissions"
+	plot_emissions(result_2)
+elseif which_graph_2 == "Concentrations"
+	plot_concentrations(result_2; relative_to_preindustrial=true)
+else
+	plot_temp(result_2)
+end
+
+# ╔═╡ f4203dcf-b251-4e2b-be07-922bc7c4496d
+(@initially initial_3 @bind input_3 begin
+	
+	
+	controls_3 = MRGA(
+		M=gaussish(input_3["M"]...),
+	)
+	
+	result_3 = forward_controls_temp(controls_3)
+	
+	plotclicktracker2(
+		plot_controls(controls_3; title="Deployment of mitigation"),
+		initial_3
+	)
+end) |> cloak("cost_benefits_narrative_input")
+
+# ╔═╡ 3e26d311-6abc-4b2c-ada4-f8a3171d9f75
+if cost_benefits_narrative_slide == 1
+	local uncontrolled = ClimateModel(default_parameters())
+	plot_costs(uncontrolled; show_controls=false, show_baseline=false)
+elseif cost_benefits_narrative_slide == 2
+	plot_costs(result_3; show_controls=false)
+else
+	plot_costs(result_3)
+end
+
+# ╔═╡ aac86adf-465f-464f-b258-406c2e55b82f
+@initially initial_4 @bind input_4 begin
+	
+	
+	controls_4 = enforce_maxslope!(MRGA(
+		M=gaussish(input_4["M"]...),
+		R=gaussish(input_4["R"]...),
+	))
+	
+	result_4 = forward_controls_temp(controls_4)
+	
+	plotclicktracker2(
+		plot_controls(controls_4; title="Deployment of mitigation"),
+		initial_4
+	)
+end
+
+# ╔═╡ a751fb75-952e-41d4-a8b5-aba512c10e55
+if which_graph_4 == "Emissions"
+	plot_emissions(result_4)
+elseif which_graph_4 == "Concentrations"
+	plot_concentrations(result_4; relative_to_preindustrial=true)
+elseif which_graph_4 == "Temperature"
+	plot_temp(result_4)
+else
+	plot_costs(result_4)
+end
 
 # ╔═╡ 7ffad0f8-082b-4ca1-84f7-37c08d5f7266
 md"""
@@ -1905,7 +1913,8 @@ end
 # ╟─2821b722-75c2-4072-b142-d13553a84b7b
 # ╟─2dcd5669-c725-40b9-84c4-f8399f6e924b
 # ╟─b8f9efec-63ac-4e58-93cf-9f7199b78451
-# ╟─371991c7-13dd-46f6-a730-ad89f43c6f0e
+# ╠═371991c7-13dd-46f6-a730-ad89f43c6f0e
+# ╠═f47bcdbd-304d-4b20-9a8f-8c3e3f998e0d
 # ╟─0a3be2ea-6af6-43c0-b8fb-e453bc2b703b
 # ╟─b7ca316b-6fa6-4c2e-b43b-cddb08aaabbb
 # ╟─7ffad0f8-082b-4ca1-84f7-37c08d5f7266
