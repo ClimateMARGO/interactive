@@ -25,7 +25,9 @@ begin
         Pkg.PackageSpec(name="PlutoUI", version="0.7"),
         Pkg.PackageSpec(name="HypertextLiteral", version="0.9"),
 		Pkg.PackageSpec(name="Underscores", version="2"),
+		Pkg.PackageSpec(name="AbstractPlutoDingetjes", version="1.2"),
     ])
+	Pkg.build()
 	
 	using Plots
 	using Plots.Colors
@@ -36,6 +38,7 @@ begin
 	using PlutoUI
     using HypertextLiteral
 	using Underscores
+	import AbstractPlutoDingetjes
 	
 	Plots.default(linewidth=5)
 end;
@@ -571,7 +574,7 @@ function plotclicktracker(p::Plots.Plot; draggable::Bool=false)
 
 	HTML("""<script id="hello">
 
-		const body = $(PlutoRunner.publish_to_js(plot_render))
+		const body = $(AbstractPlutoDingetjes.Display.published_to_js(plot_render))
 		const mime = "image/svg+xml"
 
 
@@ -809,7 +812,7 @@ function plotclicktracker2(p::Plots.Plot, initial::Dict; draggable::Bool=true)
 		const names = $(names_js)
 		
 
-		const body = $(PlutoRunner.publish_to_js(plot_render))
+		const body = $(AbstractPlutoDingetjes.Display.published_to_js(plot_render))
 		const mime = "image/svg+xml"
 
 		
@@ -1913,8 +1916,8 @@ end
 # ╟─2821b722-75c2-4072-b142-d13553a84b7b
 # ╟─2dcd5669-c725-40b9-84c4-f8399f6e924b
 # ╟─b8f9efec-63ac-4e58-93cf-9f7199b78451
-# ╠═371991c7-13dd-46f6-a730-ad89f43c6f0e
-# ╠═f47bcdbd-304d-4b20-9a8f-8c3e3f998e0d
+# ╟─371991c7-13dd-46f6-a730-ad89f43c6f0e
+# ╟─f47bcdbd-304d-4b20-9a8f-8c3e3f998e0d
 # ╟─0a3be2ea-6af6-43c0-b8fb-e453bc2b703b
 # ╟─b7ca316b-6fa6-4c2e-b43b-cddb08aaabbb
 # ╟─7ffad0f8-082b-4ca1-84f7-37c08d5f7266
